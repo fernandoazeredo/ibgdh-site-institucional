@@ -7,7 +7,7 @@ const icons = [Scale, Users, HandHeart, BookOpen, Building2, Landmark, Scale, Us
 
 export function HomePage() {
   return <>
-    <section className="hero-home">
+    <section className="hero-home anchor-section" id="inicio">
       <div className="container hero-home__grid">
         <div className="hero-copy">
           <span className="eyebrow">Instituto Brasil Global de Direitos Humanos</span>
@@ -26,7 +26,7 @@ export function HomePage() {
       </div>
     </section>
 
-    <section className="section">
+    <section className="section anchor-section" id="atuacao">
       <div className="container">
         <SectionHeading eyebrow="Atuação" title="Direitos que fazem parte da vida" description="O Instituto organiza sua atuação em áreas conectadas às necessidades reais da população." />
         <div className="card-grid card-grid--four">
@@ -36,7 +36,7 @@ export function HomePage() {
       </div>
     </section>
 
-    <section className="section section--tint">
+    <section className="section section--tint anchor-section" id="direitos">
       <div className="container split-section">
         <div>
           <SectionHeading eyebrow="Informação para todos" title="Entender um direito é o primeiro passo para exercê-lo" description="Guias diretos e responsáveis ajudam a identificar caminhos, organizar documentos e procurar o serviço adequado." />
@@ -50,13 +50,13 @@ export function HomePage() {
       </div>
     </section>
 
-    <section className="section">
+    <section className="section anchor-section" id="projetos">
       <div className="container">
         <SectionHeading eyebrow="Iniciativas" title="Projetos em desenvolvimento" description="Programas que unem cidadania, conhecimento, inclusão e transformação social." />
         <div className="card-grid card-grid--three">{projects.map(project => <article className="project-card" key={project.title}><span className="status">{project.status}</span><small>{project.category}</small><h3>{project.title}</h3><p>{project.summary}</p><Link to="/projetos">Saiba mais <ArrowRight size={16} /></Link></article>)}</div>
       </div>
     </section>
 
-    <section className="cta-band"><div className="container cta-band__content"><div><span className="eyebrow">Participe</span><h2>Quer conhecer, apoiar ou colaborar com o Instituto?</h2></div><Link className="button button--light" to="/contato">Fale com o IBGDH <ArrowRight size={18} /></Link></div></section>
+    <section className="cta-band anchor-section" id="participe"><div className="container cta-band__content"><div><span className="eyebrow">Participe</span><h2>Quer conhecer, apoiar ou colaborar com o Instituto?</h2></div><Link className="button button--light" to="/contato">Fale com o IBGDH <ArrowRight size={18} /></Link></div></section>
   </>
 }

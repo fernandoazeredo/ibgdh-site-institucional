@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { Accessibility, ChevronRight, Menu, Moon, Sun, X } from 'lucide-react'
 import { organization } from '../content'
@@ -15,9 +15,20 @@ const navigation = [
   ['Contato', '/contato'],
 ] as const
 
+const homeAnchors = [
+  ['Apresentação', 'inicio'],
+  ['Áreas em destaque', 'atuacao'],
+  ['Orientações ao cidadão', 'direitos'],
+  ['Projetos em desenvolvimento', 'projetos'],
+  ['Participe do Instituto', 'participe'],
+] as const
+
 export function SiteLayout({ children }: SiteLayoutProps) {
   const location = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [compactNavigation, setCompactNavigation] = useState(() => window.matchMedia('(max-width: 1050px)').matches)
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const saved = localStorage.getItem('ibgdh-theme')
     if (saved === 'light' || saved === 'dark') return saved
@@ -31,13 +42,58 @@ export function SiteLayout({ children }: SiteLayoutProps) {
 
   useEffect(() => {
     setMenuOpen(false)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [location.pathname])
+    const scrollTimer = window.setTimeout(() => {
+      if (location.hash) {
+        const target = document.getElementById(location.hash.slice(1))
+        target?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        return
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }, 0)
+
+    return () => window.clearTimeout(scrollTimer)
+  }, [location.pathname, location.hash])
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 1050px)')
+    const updateNavigationMode = () => {
+      setCompactNavigation(mediaQuery.matches)
+      if (!mediaQuery.matches) setMenuOpen(false)
+    }
+
+    updateNavigationMode()
+    mediaQuery.addEventListener('change', updateNavigationMode)
+    return () => mediaQuery.removeEventListener('change', updateNavigationMode)
+  }, [])
 
   useEffect(() => {
     document.body.classList.toggle('menu-open', menuOpen)
     return () => document.body.classList.remove('menu-open')
   }, [menuOpen])
+
+  useEffect(() => {
+    if (!menuOpen) return
+
+    closeButtonRef.current?.focus()
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return
+      setMenuOpen(false)
+      menuButtonRef.current?.focus()
+    }
+
+    document.addEventListener('keydown', closeOnEscape)
+    return () => document.removeEventListener('keydown', closeOnEscape)
+  }, [menuOpen])
+
+  const closeMenu = () => setMenuOpen(false)
+  const selectAnchor = (anchor: string) => {
+    closeMenu()
+    if (location.pathname !== '/') return
+
+    window.requestAnimationFrame(() => {
+      document.getElementById(anchor)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  }
 
   return (
     <div className="site-shell">
@@ -59,19 +115,46 @@ export function SiteLayout({ children }: SiteLayoutProps) {
             </span>
           </Link>
 
-          <nav className={`main-nav${menuOpen ? ' main-nav--open' : ''}`} aria-label="Navegação principal">
+          <nav
+            className={`main-nav${menuOpen ? ' main-nav--open' : ''}`}
+            id="navegacao-principal"
+            aria-label="Navegação principal"
+            aria-hidden={compactNavigation && !menuOpen}
+            inert={compactNavigation && !menuOpen}
+          >
             <div className="mobile-nav-heading">
-              <strong>Menu</strong>
-              <button className="icon-button" onClick={() => setMenuOpen(false)} aria-label="Fechar menu">
+              <div>
+                <strong>Menu</strong>
+                <small>Navegue pelo site do IBGDH</small>
+              </div>
+              <button ref={closeButtonRef} className="icon-button" onClick={closeMenu} aria-label="Fechar menu">
                 <X aria-hidden="true" />
               </button>
             </div>
-            {navigation.map(([label, path]) => (
-              <NavLink key={path} to={path} end={path === '/'}>
-                {label}
-              </NavLink>
-            ))}
-            <NavLink className="nav-admin" to="/administracao">Área administrativa</NavLink>
+
+            <div className="nav-links-primary">
+              {navigation.map(([label, path]) => (
+                <NavLink key={path} to={path} end={path === '/'} onClick={closeMenu}>
+                  {label}
+                </NavLink>
+              ))}
+            </div>
+
+            <div className="mobile-nav-section">
+              <span className="mobile-nav-label">Atalhos da página inicial</span>
+              {homeAnchors.map(([label, anchor]) => (
+                <Link key={anchor} to={`/#${anchor}`} onClick={() => selectAnchor(anchor)}>
+                  {label}
+                </Link>
+              ))}
+            </div>
+
+            <div className="mobile-nav-section">
+              <span className="mobile-nav-label">Outros acessos</span>
+              <Link to="/acessibilidade" onClick={closeMenu}>Acessibilidade</Link>
+              <Link to="/privacidade" onClick={closeMenu}>Privacidade</Link>
+              <Link to="/administracao" onClick={closeMenu}>Área administrativa</Link>
+            </div>
           </nav>
 
           <div className="header-actions">
@@ -83,10 +166,12 @@ export function SiteLayout({ children }: SiteLayoutProps) {
               {theme === 'light' ? <Moon aria-hidden="true" /> : <Sun aria-hidden="true" />}
             </button>
             <button
+              ref={menuButtonRef}
               className="icon-button menu-button"
-              onClick={() => setMenuOpen(true)}
-              aria-label="Abrir menu"
+              onClick={() => setMenuOpen((open) => !open)}
+              aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
               aria-expanded={menuOpen}
+              aria-controls="navegacao-principal"
             >
               <Menu aria-hidden="true" />
             </button>
@@ -94,7 +179,7 @@ export function SiteLayout({ children }: SiteLayoutProps) {
         </div>
       </header>
 
-      {menuOpen && <button className="menu-backdrop" onClick={() => setMenuOpen(false)} aria-label="Fechar menu" />}
+      {menuOpen && <button className="menu-backdrop" onClick={closeMenu} aria-label="Fechar menu" />}
 
       <main id="conteudo-principal">{children}</main>
 
