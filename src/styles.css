@@ -115,6 +115,40 @@ button:disabled { opacity: .62; cursor: not-allowed; }
 .number-list span { color: var(--gold); font: 800 1.45rem 'Libre Franklin'; }
 .number-list p { margin: 0; }
 .number-list strong { color: var(--ink); }
+.external-platform-section { padding: 0 0 78px; }
+.external-platform-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 390px;
+  display: grid;
+  grid-template-columns: minmax(280px, .8fr) 1.2fr;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 18% 50%, rgb(64 231 211 / 18%), transparent 32%),
+    linear-gradient(130deg, #071f25 0%, #0a302c 48%, #12564d 100%);
+  box-shadow: var(--shadow);
+  color: white;
+  transition: transform .2s, box-shadow .2s;
+}
+.external-platform-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: inherit;
+}
+.external-platform-card:hover { transform: translateY(-5px); box-shadow: 0 24px 60px rgb(10 48 44 / 20%); }
+.external-platform-card__image { align-self: stretch; min-height: 390px; display: grid; place-items: center; align-content: center; padding: 30px; background: rgb(0 0 0 / 14%); }
+.external-platform-card__image img { width: min(300px, 80%); filter: drop-shadow(0 18px 22px rgb(0 0 0 / 32%)); }
+.external-platform-card__image strong { margin-top: -5px; color: #80f2e5; font: 800 clamp(1.55rem, 3vw, 2.15rem) 'Libre Franklin'; letter-spacing: .04em; text-transform: uppercase; }
+.external-platform-card__content { position: relative; z-index: 1; padding: 55px 60px; }
+.external-platform-card__content .eyebrow { color: #80f2e5; }
+.external-platform-card__content h2 { max-width: 680px; margin: 12px 0 18px; font-size: clamp(1.9rem, 3.4vw, 3rem); }
+.external-platform-card__content p { max-width: 650px; color: #d5e7e3; font-size: 1.05rem; }
+.external-platform-card__action { display: inline-flex; align-items: center; gap: 9px; margin-top: 12px; color: #f0d899; font-weight: 800; }
 .status { display: inline-flex; width: fit-content; padding: 5px 9px; color: var(--green-800); background: var(--green-100); border-radius: 20px; font-size: .72rem; font-weight: 700; }
 .project-card { display: flex; flex-direction: column; }
 .project-card small { margin-top: 18px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
@@ -186,7 +220,17 @@ button:disabled { opacity: .62; cursor: not-allowed; }
 .site-footer { padding: 68px 0 20px; color: #e8f2ef; background: #071f1c; }
 .footer-grid { display: grid; grid-template-columns: 1.5fr .8fr .9fr 1.2fr; gap: 50px; }
 .footer-brand { display: flex; align-items: flex-start; gap: 14px; }
-.footer-brand img { width: 58px; filter: brightness(0) invert(1); }
+.footer-brand img {
+  width: 72px;
+  height: 72px;
+  flex: 0 0 72px;
+  padding: 4px;
+  object-fit: cover;
+  border: 2px solid #d8a84e;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 24%);
+}
 .footer-brand strong { font: 800 1.5rem 'Libre Franklin'; }
 .site-footer h2 { margin-bottom: 18px; color: #e9c985; font-size: .82rem; text-transform: uppercase; letter-spacing: .1em; }
 .site-footer p { color: #a9bfba; }
@@ -218,6 +262,10 @@ button:disabled { opacity: .62; cursor: not-allowed; }
   .hero-copy { padding: 0; }
   .hero-panel { margin-top: 45px; }
   .split-section, .transparency-grid, .contact-grid { grid-template-columns: 1fr; gap: 45px; }
+  .external-platform-card { grid-template-columns: 1fr; }
+  .external-platform-card__image { min-height: 310px; }
+  .external-platform-card__image img { width: min(260px, 70%); }
+  .external-platform-card__content { padding: 42px; }
   .values-grid { grid-template-columns: repeat(2, 1fr); }
   .values-grid div { border-bottom: 1px solid var(--line); }
   .card-grid--three { grid-template-columns: 1fr; }
@@ -236,6 +284,10 @@ button:disabled { opacity: .62; cursor: not-allowed; }
   .project-list article { padding-inline: 22px; }
   .notice .container, .data-list div, .cnae-list div { grid-template-columns: 1fr; gap: 5px; }
   .contact-form, .admin-card { padding: 28px; }
+  .external-platform-section { padding: 0 0 52px; }
+  .external-platform-card__image { min-height: 260px; padding: 22px; }
+  .external-platform-card__image img { width: min(220px, 72%); }
+  .external-platform-card__content { padding: 30px 24px 34px; }
   .footer-grid { grid-template-columns: 1fr; gap: 34px; }
   .footer-bottom { flex-direction: column; }
 }
