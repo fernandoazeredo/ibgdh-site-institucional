@@ -29,7 +29,7 @@ export function ProjectsPage() {
       <div className="container">
         <a
           className="external-platform-card"
-          href="https://www.concurssauro.com.br/auth/login.html"
+          href="https://www.concurssauro.com.br/visitor-landing.html"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Acessar a plataforma externa Concurssauro em uma nova aba"
