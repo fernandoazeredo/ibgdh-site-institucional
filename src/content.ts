@@ -106,16 +106,71 @@ export const projects = [
 
 export const simpleGuides = [
   {
+    slug: 'antes-de-solicitar-orientacao',
     title: 'Antes de solicitar orientação',
     description: 'Organize documentos, datas e informações essenciais para explicar a situação com clareza.',
+    introduction:
+      'Uma preparação simples ajuda o atendimento a ser mais claro e evita que informações importantes fiquem de fora.',
+    steps: [
+      { title: 'Conte o que aconteceu', text: 'Escreva os fatos em ordem de data, indicando pessoas, órgãos, locais e acontecimentos importantes.' },
+      { title: 'Defina o que você precisa', text: 'Anote sua principal dúvida e qual solução, informação ou encaminhamento está buscando.' },
+      { title: 'Separe os documentos', text: 'Reúna cópias legíveis de contratos, avisos, mensagens, comprovantes e outros registros relacionados.' },
+      { title: 'Registre o atendimento', text: 'Guarde a data, o canal utilizado, o nome do atendente, o protocolo informado e o prazo de resposta.' },
+    ],
+    checklist: [
+      'Documento de identificação e comprovante de endereço, quando exigidos',
+      'Resumo dos fatos com datas, nomes e locais',
+      'Cópias legíveis dos documentos relacionados',
+      'Mensagens, comprovantes e protocolos anteriores',
+    ],
+    attention: 'Não entregue documentos originais sem recibo. Antes de enviar dados pessoais, confirme se o canal é oficial e se todas as informações solicitadas são realmente necessárias.',
+    links: [{ label: 'Buscar serviços no portal Gov.br', href: 'https://www.gov.br/pt-br/servicos' }],
   },
   {
+    slug: 'como-localizar-um-servico-publico',
     title: 'Como localizar um serviço público',
     description: 'Identifique o órgão responsável, consulte os canais oficiais e registre o número do atendimento.',
+    introduction: 'O caminho correto depende do assunto e de quem presta o serviço: município, estado ou Governo Federal.',
+    steps: [
+      { title: 'Identifique o assunto', text: 'Defina se a necessidade envolve saúde, assistência social, educação, documentos, trabalho ou outra área.' },
+      { title: 'Procure no canal oficial', text: 'Pesquise pelo nome do serviço e confirme o órgão responsável, o público atendido e a área de abrangência.' },
+      { title: 'Confira os requisitos', text: 'Leia quais documentos são exigidos, se há custo, como solicitar e qual é o prazo previsto.' },
+      { title: 'Acompanhe a solicitação', text: 'Anote o protocolo e o prazo. Se necessário, procure a ouvidoria do órgão ou utilize o Fala.BR quando aplicável.' },
+    ],
+    checklist: [
+      'Nome correto do serviço e do órgão responsável',
+      'Público atendido e requisitos para solicitar',
+      'Documentos, custos e prazo informado',
+      'Protocolo e canal para acompanhamento',
+    ],
+    attention: 'Antes de informar dados, confira o endereço do site e os contatos publicados pelo próprio órgão. Páginas federais oficiais utilizam o domínio gov.br.',
+    links: [
+      { label: 'Pesquisar serviços públicos', href: 'https://www.gov.br/pt-br/servicos' },
+      { label: 'Acessar a plataforma Fala.BR', href: 'https://falabr.cgu.gov.br/v2/' },
+    ],
   },
   {
+    slug: 'protecao-de-dados-pessoais',
     title: 'Proteção de dados pessoais',
     description: 'Evite enviar documentos sensíveis por canais não confirmados e verifique a finalidade da solicitação.',
+    introduction: 'Dados pessoais devem ser usados com cuidado. Confirme quem está solicitando, para qual finalidade e quais informações são indispensáveis.',
+    steps: [
+      { title: 'Confirme o canal', text: 'Verifique o contato no site oficial da instituição. Não confie apenas em links recebidos por mensagem.' },
+      { title: 'Pergunte a finalidade', text: 'Entenda por que cada dado é necessário, como será utilizado e se poderá ser compartilhado.' },
+      { title: 'Envie somente o necessário', text: 'Oculte informações sem relação com o pedido e evite redes públicas ao transmitir documentos.' },
+      { title: 'Guarde os registros', text: 'Mantenha comprovantes e protocolos. Você pode solicitar acesso, correção e outras medidas previstas na LGPD.' },
+    ],
+    checklist: [
+      'Identidade e contato oficial de quem solicita',
+      'Finalidade informada para o uso dos dados',
+      'Somente os dados e documentos indispensáveis',
+      'Conexão segura e comprovante do envio',
+    ],
+    attention: 'Nunca informe senha, código de verificação, senha bancária ou código de recuperação. Se suspeitar de fraude, altere suas senhas, ative a verificação em duas etapas e procure os canais oficiais.',
+    links: [
+      { label: 'Conhecer seus direitos sobre dados pessoais', href: 'https://www.gov.br/anpd/pt-br/assuntos/titular-de-dados-1/direito-dos-titulares' },
+      { label: 'Gerenciar o uso de dados na conta Gov.br', href: 'https://www.gov.br/governodigital/pt-br/identidade/gerenciar-o-uso-dos-seus-dados-pessoais' },
+    ],
   },
 ]
 
