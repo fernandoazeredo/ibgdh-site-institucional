@@ -1,0 +1,16 @@
+{
+  "name": "Instituto Brasil Global de Direitos Humanos - IBGDH",
+  "short_name": "IBGDH",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f5ef",
+  "theme_color": "#10233f",
+  "icons": [
+    {
+      "src": "/logo-ibgdh.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

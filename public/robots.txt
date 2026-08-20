@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ibgdh-site-institucional.web.app/sitemap.xml

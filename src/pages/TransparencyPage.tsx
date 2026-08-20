@@ -1,0 +1,7 @@
+import { Download, FileText } from 'lucide-react'
+import { PageHero } from '../components/PageHero'
+import { organization, primaryCnae, secondaryCnaes } from '../content'
+
+export function TransparencyPage() {
+  return <><PageHero eyebrow="Governança" title="Transparência" description="Informações institucionais organizadas para facilitar o acompanhamento público." /><section className="section"><div className="container transparency-grid"><div><h2>Dados institucionais</h2><dl className="data-list"><div><dt>Razão social</dt><dd>{organization.legalName}</dd></div><div><dt>CNPJ</dt><dd>{organization.cnpj}</dd></div><div><dt>Sede</dt><dd>{organization.address}, {organization.district}, {organization.cityState}, CEP {organization.zipCode}</dd></div><div><dt>Atividade principal</dt><dd>{primaryCnae.code} — {primaryCnae.description}</dd></div></dl></div><aside className="document-panel"><FileText size={34} /><h2>Documentos institucionais</h2><p>O repositório público de documentos será disponibilizado conforme a validação administrativa.</p><button type="button" disabled><Download size={17} /> Em preparação</button></aside></div></section><section className="section section--tint"><div className="container"><h2>Atividades secundárias registradas</h2><div className="cnae-list">{secondaryCnaes.map(([code, description]) => <div key={code}><strong>{code}</strong><span>{description}</span></div>)}</div></div></section></>
+}

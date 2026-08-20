@@ -1,0 +1,56 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function userProfile() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    function activeStaff() {
+      return signedIn()
+        && userProfile().data.status == 'active'
+        && userProfile().data.role in ['master', 'admin', 'editor'];
+    }
+
+    function administrator() {
+      return activeStaff() && userProfile().data.role in ['master', 'admin'];
+    }
+
+    function master() {
+      return activeStaff() && userProfile().data.role == 'master';
+    }
+
+    function publicDocument() {
+      return resource.data.status == 'published';
+    }
+
+    match /siteConfig/{document} {
+      allow read: if true;
+      allow create, update: if administrator();
+      allow delete: if master();
+    }
+
+    match /{collection}/{document} {
+      allow read: if collection in ['pages', 'projects', 'news', 'events', 'publications', 'indicators']
+        && (publicDocument() || activeStaff());
+      allow create, update: if collection in ['pages', 'projects', 'news', 'events', 'publications', 'indicators']
+        && activeStaff();
+      allow delete: if collection in ['pages', 'projects', 'news', 'events', 'publications', 'indicators']
+        && administrator();
+    }
+
+    match /users/{userId} {
+      allow read: if signedIn() && (request.auth.uid == userId || administrator());
+      allow create, update: if administrator();
+      allow delete: if master() && request.auth.uid != userId;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
